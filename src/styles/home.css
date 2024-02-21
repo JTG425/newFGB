@@ -1,3 +1,10 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .datePicker {
     margin: 1rem;
     width: 70px;

@@ -80,7 +80,7 @@ function App() {
           <NavBar setPage={handlePageChange} />
           <AnimatePresence>
             <motion.div
-              className='page-container'
+              className='page'
               initial="fadeIn"
               animate={fade ? 'fadeIn' : 'fadeIn'}
               variants={pageVariants}

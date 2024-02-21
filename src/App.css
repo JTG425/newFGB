@@ -84,10 +84,11 @@
   align-items: center;
   height: fit-content;
   width: 90vw;
-  max-width: 1000px;
+  max-width: 1500px;
   overflow-x: hidden;
   background: var(--foreground);
   padding: 2rem;
+  margin-top: 20px;
 }
 
 .page-container::-webkit-scrollbar {

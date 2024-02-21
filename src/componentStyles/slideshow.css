@@ -1,14 +1,15 @@
 .slideshow {
     position: relative;
-    margin: 25px;
-    width: 100vw;
-    height: 50vh;
+    margin-top: 75px;
+    width: 95vw;
+    height: 35vh;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     background: grey;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 0.375rem;
 }
 
 .background-image {
@@ -45,4 +46,10 @@
     z-index: 1;
 }
 
-@media screen and (max-width: 600px) {}
+@media screen and (max-width: 600px) {
+    .slideshow {
+        border-radius: 0;
+        width: 100vw;
+        height: 35vh;
+    }
+}

@@ -1,7 +1,5 @@
 import '../styles/home.css';
 import React from 'react';
-import { useState } from 'react';
-import Slideshow from '../components/Slideshow';
 
 
 function Locations() {
