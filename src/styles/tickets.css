@@ -1,0 +1,24 @@
+.tickets {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.tickets h2 {
+    display: flex;
+    justify-content: center;
+}
+
+.tickets h3 {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+}
+
+.tickets p {
+    display: flex;
+    justify-content: flex-start;
+    text-align: justify;
+    text-justify: inter-word;
+}
