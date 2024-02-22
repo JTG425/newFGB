@@ -8,7 +8,7 @@ const convertToStandardTime = (militaryTime) => {
     let hours = parseInt(hoursMinutes[1], 10);
     const minutes = hoursMinutes[2];
     const suffix = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12; 
+    hours = hours % 12 || 12;
 
     return `${hours}:${minutes} ${suffix}`;
 };
@@ -21,16 +21,21 @@ function MovieCard(props) {
             {shows.map((film, filmIndex) => (
                 film.shows.filter(show => show.date === date).length > 0 && (
                     <div className='film' key={filmIndex}>
+                        <MoviePoster rtsCode={film.rtsCode} />
                         <div className='film-header'>
                             <h3>{film.name}</h3>
                             <p>{film.rating}</p>
+                            {film.shows.filter(show => show.date === date).map((show, showIndex) => (
+                                <div className='showtime' key={showIndex}>
+                                    <motion.a
+                                        className='showtime-link'
+                                        href={show.saleLink}
+                                        target="_blank"
+                                    >{convertToStandardTime(show.time)}
+                                    </motion.a>
+                                </div>
+                            ))}
                         </div>
-                        <MoviePoster rtsCode={film.rtsCode} />
-                        {film.shows.filter(show => show.date === date).map((show, showIndex) => (
-                            <div className='showtime' key={showIndex}>
-                                <a href={show.salelink}>{convertToStandardTime(show.time)}</a>
-                            </div>
-                        ))}
                     </div>
                 )
             ))}
