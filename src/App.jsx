@@ -1,8 +1,8 @@
 import './App.css';
 import loading from './logos/loading.svg';
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useState, useRef } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/navbar';
 import Home from './pages/home';
 import Tickets from './pages/tickets';
@@ -14,11 +14,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 
 function App() {
+  //eslint-disable-next-line
   const [page, setPage] = useState('Home');
   const [fade, setFade] = useState(true);
   const [loadScreen, setLoadScreen] = useState(true);
   const fadeRef = useRef();
-
+  const serverip = '172.16.34.38:3001'
   const loadVariants = {
     loadScreen: {
       opacity: 1,
@@ -73,33 +74,34 @@ function App() {
       >
         <img src={loading} alt="loading" className='loading-svg' />
       </motion.div>
-      <div className="App">
-        <header className="App-header">
-        </header>
-        <div className='nav-container'>
-          <NavBar setPage={handlePageChange} />
-          <AnimatePresence>
-            <motion.div
-              className='page'
-              initial="fadeIn"
-              animate={fade ? 'fadeIn' : 'fadeIn'}
-              variants={pageVariants}
-              exit={{ opacity: 0 }}
-            >
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/tickets" element={<Tickets />} />
-                <Route path="/locations" element={<Locations />} />
-                <Route path="/gift" element={<Gift />} />
-                <Route path="/advertise" element={<Advertise />} />
-                <Route path="/groups" element={<Groups />} />
-              </Routes>
-            </motion.div>
-          </AnimatePresence>
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="App">
+          <header className="App-header">
+          </header>
+          <div className='nav-container'>
+            <NavBar setPage={handlePageChange} />
+            <AnimatePresence>
+              <motion.div
+                className='page'
+                initial="fadeIn"
+                animate={fade ? 'fadeIn' : 'fadeIn'}
+                variants={pageVariants}
+                exit={{ opacity: 0 }}
+              >
+                <Routes>
+                  <Route path="/" element={<Home serverip={serverip} />} />
+                  <Route path="/home" element={<Home serverip={serverip} />} />
+                  <Route path="/tickets" element={<Tickets />} />
+                  <Route path="/locations" element={<Locations />} />
+                  <Route path="/gift" element={<Gift />} />
+                  <Route path="/advertise" element={<Advertise />} />
+                  <Route path="/groups" element={<Groups />} />
+                </Routes>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
-
+      </Suspense>
     </BrowserRouter>
   );
 }

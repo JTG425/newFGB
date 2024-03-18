@@ -1,27 +1,57 @@
 import '../componentStyles/navbar.css';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import navLogo from '../logos/nav.svg';
 
 function DropDown(props) {
     const [showDropdown, setShowDropdown] = useState(false);
+    const [index, setIndex] = useState(0);
 
-    const handlePageChange = (page) => {
-        props.setPage(page);
-    }
+    const pages = [
+        'Home',
+        'Buy Tickets',
+        'Locations',
+        'Gift Cards',
+        'Rentals',
+        'Advertise'
+    ]
 
 
     return (
-        <div>
+        <motion.div
+            className='dropdown-container'
+        >
             <motion.button
-                whileHover={{ scale: 1.1 }}
+                className='dropdown-button'
                 whileTap={{ scale: 0.9 }}
-                className='nav-item'
                 onClick={() => setShowDropdown(!showDropdown)}
             >
-                <p>=</p>
+                <p>{pages[index]}</p>
             </motion.button>
-        </div>
+            {showDropdown && (
+                <motion.div
+                    className='dropdown-list'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    {pages.map((page, i) => {
+                        return (
+                            <motion.button
+                                className='dropdown-item'
+                                key={i}
+                                onClick={() => {
+                                    setIndex(i);
+                                    setShowDropdown(false);
+                                }}
+                            >
+                                <p>{page}</p>
+                            </motion.button>
+                        );
+                    })}
+                </motion.div>
+            )}
+
+        </motion.div>
     );
 }
 

@@ -19,11 +19,12 @@ const MoviePoster = (props) => {
     const [poster, setPoster] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const rtsCode = props.rtsCode;
+    const serverip = props.serverip;
 
     useEffect(() => {
         const getPoster = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/get-poster-images`, {
+                const response = await fetch(`http://${serverip}/get-poster-images`, {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',

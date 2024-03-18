@@ -1,9 +1,10 @@
 import '../styles/home.css';
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import Slideshow from '../components/Slideshow';
 import MovieCard from '../components/getMovies';
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import "../componentStyles/datepicker.css";
 
 // XML Date Format: 02222024
 
@@ -20,13 +21,15 @@ const handleDateFormating = (date) => {
 }
 
 
-function Home() {
+function Home(props) {
     const [startDate, setStartDate] = useState(new Date());
     const [formattedDate, setFormattedDate] = useState(handleDateFormating(startDate));
+    const [theater, setTheater] = useState('Capitol');
     // eslint-disable-next-line no-unused-vars
     const [expectedFilmTitleCount, setExpectedFilmTitleCount] = useState(0);
     const [rtsCodes, setRtsCodes] = useState([]);
     const [shows, setShows] = useState([]);
+    const serverip = props.serverip;
 
 
 
@@ -35,7 +38,7 @@ function Home() {
     useEffect(() => {
         const importXml = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/get-xml`);
+                const response = await fetch(`http://${serverip}/get-xml`);
                 const xmlText = await response.text();
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
@@ -43,13 +46,16 @@ function Home() {
                 const filmTitleElements = xmlDoc.getElementsByTagName('filmtitle');
                 setExpectedFilmTitleCount(filmTitleElements.length);
 
-                const extractedShows = Array.from(filmTitleElements).map((filmTitleElement, index, array) => {
+                let allRtsCodes = []; // Temporary array to hold all RTS codes
+
+                const extractedShows = Array.from(filmTitleElements).map((filmTitleElement) => {
                     const name = filmTitleElement.querySelector('name').textContent;
                     const rating = filmTitleElement.querySelector('rating').textContent;
                     const length = filmTitleElement.querySelector('length').textContent;
                     const website = filmTitleElement.querySelector('website').textContent;
                     const rtsCode = filmTitleElement.querySelector('RtsCode').textContent;
-                    setRtsCodes((prevRtsCodes) => [...prevRtsCodes, rtsCode]);
+
+                    allRtsCodes.push(rtsCode); // Add rtsCode to the temporary array
 
                     const showElements = filmTitleElement.getElementsByTagName('show');
                     const extractedShows = Array.from(showElements).map((showElement) => {
@@ -57,10 +63,14 @@ function Home() {
                         const time = showElement.querySelector('time').textContent;
                         const saleLink = showElement.querySelector('salelink').textContent;
 
-                        return {date, time, saleLink};
+                        return { date, time, saleLink };
                     });
-                    return {name, rating, length, website, rtsCode, shows: extractedShows};
+                    return { name, rating, length, website, rtsCode, shows: extractedShows };
                 });
+
+                // Update state with unique RTS codes
+                setRtsCodes([...new Set(allRtsCodes)]);
+
                 setShows(extractedShows);
             } catch (error) {
                 console.error('Error importing XML:', error);
@@ -69,7 +79,10 @@ function Home() {
         importXml();
     }, [formattedDate]);
 
-    
+    const handleTheaterChange = (theater) => {
+        setTheater(theater);
+        console.log(theater);
+    }
 
 
     useEffect(() => {
@@ -79,9 +92,27 @@ function Home() {
 
     return (
         <div className="home">
-            <Slideshow NUM={3} />
+            <Slideshow rtsCodes={rtsCodes} serverip={serverip} />
             <div className="page-container">
                 <p>Select Theater</p>
+                <div className='theaterselect'>
+                    <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className='theater-select-item'
+                        onClick={() => handleTheaterChange("Capitol")}
+                    >
+                        <p>Capitol</p>
+                    </motion.button>
+                    <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className='theater-select-item'
+                        onClick={() => handleTheaterChange("Paramount")}
+                    >
+                        <p>Paramount</p>
+                    </motion.button>
+                </div>
                 <DatePicker
                     className='datePicker'
                     selected={startDate}
@@ -90,7 +121,7 @@ function Home() {
                         setFormattedDate(handleDateFormating(date));
                     }}
                 />
-                <MovieCard date={formattedDate} shows={shows} />
+                <MovieCard serverip={serverip} date={formattedDate} shows={shows} />
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import '../componentStyles/getMovies.css';
 import { motion } from 'framer-motion';
 import MoviePoster from './getPosters';
+import { useState } from 'react';
 
 
 const convertToStandardTime = (militaryTime) => {
@@ -14,14 +15,31 @@ const convertToStandardTime = (militaryTime) => {
 };
 
 function MovieCard(props) {
+    const [inView, setInView] = useState(false);
     const { date, shows } = props;
+    const serverip = props.serverip;
+
+    const cardVariants = {
+        hidden: {
+            opacity: 0,
+        },
+        visible: {
+            opacity: 1,
+            transition: {
+                duration: 0.75,
+            },
+        },
+    };
 
     return (
         <motion.div className='movieCard'>
             {shows.map((film, filmIndex) => (
                 film.shows.filter(show => show.date === date).length > 0 && (
-                    <div className='film' key={filmIndex}>
-                        <MoviePoster rtsCode={film.rtsCode} />
+                    <motion.div
+                        className='film'
+                        key={filmIndex}
+                    >
+                        <MoviePoster serverip={serverip} rtsCode={film.rtsCode} />
                         <div className='film-header'>
                             <h3>{film.name}</h3>
                             <p>{film.rating}</p>
@@ -36,7 +54,7 @@ function MovieCard(props) {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </motion.div>
                 )
             ))}
         </motion.div>
