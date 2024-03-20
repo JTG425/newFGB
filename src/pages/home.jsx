@@ -38,7 +38,7 @@ function Home(props) {
     useEffect(() => {
         const importXml = async () => {
             try {
-                const response = await fetch(`http://${serverip}/get-xml`);
+                const response = await fetch(`https://il24sop3w1.execute-api.us-east-2.amazonaws.com/default/sendShowTimeXML`);
                 const xmlText = await response.text();
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(xmlText, 'application/xml');

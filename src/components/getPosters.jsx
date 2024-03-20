@@ -24,7 +24,7 @@ const MoviePoster = (props) => {
     useEffect(() => {
         const getPoster = async () => {
             try {
-                const response = await fetch(`http://${serverip}/get-poster-images`, {
+                const response = await fetch(`https://a32z7l7us0.execute-api.us-east-2.amazonaws.com/default/sendPosters`, {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
