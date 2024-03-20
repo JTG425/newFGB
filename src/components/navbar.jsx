@@ -28,85 +28,20 @@ function NavBar(props) {
 
 
     return (
-        <>
-            <div className='dropdown'>
-                <DropDown />
-            </div>
-            <motion.div
-                className="nav"
-            >
-                <Link to='/'>
-                    <motion.img
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="nav-logo"
-                        src={navLogo}
-                        alt="nav-logo"
-                    />
-                </Link>
-                <Link to='/'>
-                    <motion.button
-                        whileHover={{
-                            scale: 1.1,
-                            backgroundColor: 'rgba(198, 4, 4, 0.5)',
-                            color: '#fff',
-                            border: "none"
-                        }}
-                        whileTap={{ scale: 0.9 }}
-                        className="nav-item"
-                        onClick={() => handlePageChange('Home')}
-                    >
-                        <p>Home</p>
-                    </motion.button>
-                </Link>
-                <Link to='/tickets'>
-                    <motion.button
-                        whileHover={{
-                            scale: 1.1,
-                            backgroundColor: 'rgba(198, 4, 4, 0.5)',
-                            color: '#fff',
-                            border: "none"
-                        }}
-                        whileTap={{ scale: 0.9 }}
-                        className="nav-item"
-                        onClick={() => handlePageChange('Tickets')}
-                    >
-                        <p>Tickets</p>
-                    </motion.button>
-                </Link>
-
-                <Link to='/locations'>
-                    <motion.button
-                        whileHover={{
-                            scale: 1.1,
-                            backgroundColor: 'rgba(198, 4, 4, 0.5)',
-                            color: '#fff',
-                            border: "none"
-                        }}
-                        whileTap={{ scale: 0.9 }}
-                        className="nav-item"
-                        onClick={() => handlePageChange('Locations')}
-                    >
-                        <p>Locations</p>
-                    </motion.button>
-                </Link>
-                <Link to='/gift'>
-                    <motion.button
-                        whileHover={{
-                            scale: 1.1,
-                            backgroundColor: 'rgba(198, 4, 4, 0.5)',
-                            color: '#fff',
-                            border: "none"
-                        }}
-                        whileTap={{ scale: 0.9 }}
-                        className="nav-item"
-                        onClick={() => handlePageChange('Gift')}
-                    >
-                        <p>About Us</p>
-                    </motion.button>
-                </Link>
-                {/* 
-            <Link to='/groups'>
+        <motion.div
+            className="nav"
+        >
+            <DropDown currentPage={pageIndex} />
+            <Link to='/'>
+                <motion.img
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="nav-logo"
+                    src={navLogo}
+                    alt="nav-logo"
+                />
+            </Link>
+            <Link to='/'>
                 <motion.button
                     whileHover={{
                         scale: 1.1,
@@ -116,13 +51,28 @@ function NavBar(props) {
                     }}
                     whileTap={{ scale: 0.9 }}
                     className="nav-item"
-                    onClick={() => handlePageChange('Groups')}
+                    onClick={() => handlePageChange('Home')}
                 >
-                    <p>Rentals</p>
+                    <p>Home</p>
+                </motion.button>
+            </Link>
+            <Link to='/tickets'>
+                <motion.button
+                    whileHover={{
+                        scale: 1.1,
+                        backgroundColor: 'rgba(198, 4, 4, 0.5)',
+                        color: '#fff',
+                        border: "none"
+                    }}
+                    whileTap={{ scale: 0.9 }}
+                    className="nav-item"
+                    onClick={() => handlePageChange('Tickets')}
+                >
+                    <p>Tickets</p>
                 </motion.button>
             </Link>
 
-            <Link to='/advertise'>
+            <Link to='/locations'>
                 <motion.button
                     whileHover={{
                         scale: 1.1,
@@ -132,13 +82,27 @@ function NavBar(props) {
                     }}
                     whileTap={{ scale: 0.9 }}
                     className="nav-item"
-                    onClick={() => handlePageChange('Advertise')}
+                    onClick={() => handlePageChange('Locations')}
                 >
-                    <p>Advertise</p>
+                    <p>Locations</p>
                 </motion.button>
-            </Link> */}
-            </motion.div>
-        </>
+            </Link>
+            <Link to='/gift'>
+                <motion.button
+                    whileHover={{
+                        scale: 1.1,
+                        backgroundColor: 'rgba(198, 4, 4, 0.5)',
+                        color: '#fff',
+                        border: "none"
+                    }}
+                    whileTap={{ scale: 0.9 }}
+                    className="nav-item"
+                    onClick={() => handlePageChange('Gift')}
+                >
+                    <p>About Us</p>
+                </motion.button>
+            </Link>
+        </motion.div>
     );
 }
 

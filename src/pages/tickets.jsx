@@ -1,4 +1,5 @@
 import '../styles/tickets.css';
+import '../styles/home.css';
 import React from 'react';
 import { motion } from 'framer-motion';
 
