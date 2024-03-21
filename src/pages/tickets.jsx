@@ -60,6 +60,23 @@ function Tickets() {
                     </b>
                 </span></p>
             </motion.div>
+            <motion.div className='terms'>
+                <motion.input type='checkbox' id='terms' name='terms' />
+                <label for='terms'>I have read and agree to the terms and conditions</label>
+            </motion.div>
+            <motion.div className='tickets-button'>
+                <motion.button
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <a
+                        href='https://app.formovietickets.com/?id=fgbtheatres'
+                        target='_blank'
+                        rel='noreferrer'
+                    >
+                        Buy Tickets
+                    </a>
+                </motion.button>
+            </motion.div>
         </div>
     );
 }

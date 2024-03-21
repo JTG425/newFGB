@@ -4,31 +4,57 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import anime from 'animejs/lib/anime.es.js';
 import { RxHamburgerMenu } from "react-icons/rx";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaLessThanEqual } from "react-icons/fa";
 
 function DropDown(props) {
-    const [showDropdown, setShowDropdown] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(true);
+    const [firstLoad, setFirstLoad] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [index, setIndex] = useState(0);
     const currentPage = props.currentPage;
 
-    const handleDropdown = (e) => {
-        setShowDropdown(!showDropdown);
-        anime({
-            targets: '.dropdown-item',
-            translateX: [-200, 0],
-            easing: 'easeOutExpo',
-            duration: 1200,
-            delay: anime.stagger(100),
-            loop: false,
-        });
-        anime({
-            targets: '.dropdown-list',
-            translateX: [-200, 0],
-            easing: 'easeOutExpo',
-            duration: 1200,
-            loop: false,
-        });
-        anime()
+
+    const toggleDropdown = () => {
+        switch (isOpen) {
+            case false:
+                anime({
+                    targets: '.dropdown-item',
+                    translateY: [-300, 0],
+                    easing: 'easeOutExpo',
+                    duration: 800,
+                    delay: anime.stagger(100),
+                    loop: false,
+                });
+                anime({
+                    targets: '.dropdown-list',
+                    translateY: [-250, 320],
+                    easing: 'easeOutExpo',
+                    duration: 800,
+                    loop: false,
+                });
+                break;
+            case true:
+                anime({
+                    targets: '.dropdown-item',
+                    translateY: [0, -300],
+                    easing: 'easeOutExpo',
+                    duration: 800,
+                    delay: anime.stagger(100, { from: 'first' }),
+                    loop: false,
+                });
+                anime({
+                    targets: '.dropdown-list',
+                    translateY: [320, -250],
+                    easing: 'easeOutExpo',
+                    delay: 800,
+                    duration: 800,
+                    loop: false,
+                });
+                break;
+            default:
+                break;
+        }
+        setIsOpen(!isOpen);
     }
 
 
@@ -48,22 +74,22 @@ function DropDown(props) {
 
 
     return (
-        <motion.div
-            className='dropdown-container'
-        >
-            <motion.button
-                className='dropdown-button'
-                whileTap={{ scale: 0.9 }}
-                onClick={(e) => handleDropdown(e)}
-            >
-                <RxHamburgerMenu />
-            </motion.button>
+        <>
             <motion.div
-                className='dropdown-list'
-                key='dropdown-list-key'
-                initial={{ opacity: 0 }}
-                animate={showDropdown ? { opacity: 1, display: 'flex' } : { opacity: 0, display: 'none' }}
+                className='dropdown-container'
+            >
+                <h1>FGB Theaters</h1>
+                <motion.button
+                    className='dropdown-button'
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => toggleDropdown()}
+                >
+                    <RxHamburgerMenu />
+                </motion.button>
 
+            </motion.div>
+            <div
+                className='dropdown-list'
             >
                 {pages.map((page, i) => {
                     return (
@@ -74,6 +100,7 @@ function DropDown(props) {
                                 onClick={() => {
                                     setIndex(i);
                                     setShowDropdown(false);
+                                    toggleDropdown();
                                 }}
                             >
                                 <p>{page}</p>
@@ -81,9 +108,8 @@ function DropDown(props) {
                         </Link>
                     );
                 })}
-            </motion.div>
-            <h1>FGB Theaters</h1>
-        </motion.div>
+            </div>
+        </>
     );
 }
 
