@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { set } from 'animejs';
 
 const variants = {
     closed: {
@@ -18,24 +19,26 @@ const variants = {
 const MoviePoster = (props) => {
     const [poster, setPoster] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [recieved, setRecieved] = useState(false);
     const rtsCode = props.rtsCode;
     const serverip = props.serverip;
 
     useEffect(() => {
         const getPoster = async () => {
             try {
-                const response = await fetch(`https://a32z7l7us0.execute-api.us-east-2.amazonaws.com/default/sendPosters`, {
+                const response = await fetch(`https://1shn6ru7ic.execute-api.us-east-1.amazonaws.com/default/send-posters`, {
                     method: 'POST',
                     headers: {
-                        'content-type': 'application/json',
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ rtsCode }),
                 });
 
                 const json = await response.json();
                 setPoster(json.base64Image);
+                setRecieved(true)
             } catch (error) {
-                console.error('Error importing Banner Images:', error);
+                console.error('Error importing Poster Images:', error);
             }
         };
         getPoster();
@@ -45,18 +48,19 @@ const MoviePoster = (props) => {
 
     return (
         <div>
-            <motion.img
-                className='poster'
-                src={`data:image/jpg;base64,${poster}`}
-                alt={rtsCode}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                animate={isOpen ? "open" : "closed"}
-                variants={variants}
-                onClick={() => setIsOpen(isOpen => !isOpen)}
-
-            />
+            {poster != null ? (
+                <motion.img
+                    className="poster"
+                    src={`data:image/jpg;base64,${poster}`}
+                    alt={rtsCode}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.95 }}
+                />
+            ) : (
+                <motion.div className="not-found">
+                    <p>No Poster Found</p>
+                </motion.div>
+            )}
         </div>
     );
 };

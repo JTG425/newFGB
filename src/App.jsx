@@ -11,6 +11,7 @@ import Gift from './pages/gift';
 import Advertise from './pages/advertise';
 import Groups from './pages/groups';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SocialIcon } from 'react-social-icons';
 
 
 function App() {
@@ -64,45 +65,52 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <motion.div
-        className="Loading"
-        initial="loadScreen"
-        ref={fadeRef}
-        animate={loadScreen ? 'loadScreen' : 'loadScreenOut'}
-        variants={loadVariants}
-      >
-        <img src={loading} alt="loading" className='loading-svg' />
-      </motion.div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <div className="App">
-          <header className="App-header">
-          </header>
-          <div className='nav-container'>
-            <NavBar setPage={handlePageChange} />
-            <AnimatePresence>
-              <motion.div
-                className='page'
-                initial="fadeIn"
-                animate={fade ? 'fadeIn' : 'fadeIn'}
-                variants={pageVariants}
-                exit={{ opacity: 0 }}
-              >
-                <Routes>
-                  <Route path="/" element={<Home serverip={serverip} />} />
-                  <Route path="/home" element={<Home serverip={serverip} />} />
-                  <Route path="/tickets" element={<Tickets />} />
-                  <Route path="/locations" element={<Locations />} />
-                  <Route path="/gift" element={<Gift />} />
-                  <Route path="/advertise" element={<Advertise />} />
-                  <Route path="/groups" element={<Groups />} />
-                </Routes>
-              </motion.div>
-            </AnimatePresence>
+    <body>
+      <BrowserRouter>
+        <motion.div
+          className="Loading"
+          initial="loadScreen"
+          ref={fadeRef}
+          animate={loadScreen ? 'loadScreen' : 'loadScreenOut'}
+          variants={loadVariants}
+        >
+          <img src={loading} alt="loading" className='loading-svg' />
+        </motion.div>
+        <Suspense fallback={<div>Loading...</div>}>
+          <div className="App">
+            <header className="App-header">
+            </header>
+            <div className='nav-container'>
+              <NavBar setPage={handlePageChange} />
+              <AnimatePresence>
+                <motion.div
+                  className='page'
+                  initial="fadeIn"
+                  animate={fade ? 'fadeIn' : 'fadeIn'}
+                  variants={pageVariants}
+                  exit={{ opacity: 0 }}
+                >
+                  <Routes>
+                    <Route path="/" element={<Home serverip={serverip} />} />
+                    <Route path="/home" element={<Home serverip={serverip} />} />
+                    <Route path="/tickets" element={<Tickets />} />
+                    <Route path="/locations" element={<Locations />} />
+                    <Route path="/gift" element={<Gift />} />
+                    <Route path="/advertise" element={<Advertise />} />
+                    <Route path="/groups" element={<Groups />} />
+                  </Routes>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            <div className='footer'>
+              <SocialIcon bgColor='#fbfbfb' fgColor='#292323' url="https://www.facebook.com" target='_blank' />
+              <SocialIcon bgColor='#fbfbfb' fgColor='#292323' url="https://www.instagram.com/fgbtheaters/" target='_blank' />
+            </div>
+
           </div>
-        </div>
-      </Suspense>
-    </BrowserRouter>
+        </Suspense>
+      </BrowserRouter>
+    </body>
   );
 }
 

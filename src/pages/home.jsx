@@ -1,9 +1,11 @@
 import '../styles/home.css';
+import '../componentStyles/datepicker.css';
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Slideshow from '../components/Slideshow';
 import MovieCard from '../components/getMovies';
 import DatePicker from "react-datepicker";
+import NewDatePicker from '../components/datepicker';
 import "../componentStyles/datepicker.css";
 
 // XML Date Format: 02222024
@@ -38,10 +40,11 @@ function Home(props) {
     useEffect(() => {
         const importXml = async () => {
             try {
-                const response = await fetch(`https://il24sop3w1.execute-api.us-east-2.amazonaws.com/default/sendShowTimeXML`);
+                const response = await fetch(`https://8qgqyq3ke0.execute-api.us-east-1.amazonaws.com/default/send-xml`);
                 const xmlText = await response.text();
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+                console.log(xmlDoc);
 
                 const filmTitleElements = xmlDoc.getElementsByTagName('filmtitle');
                 setExpectedFilmTitleCount(filmTitleElements.length);
@@ -94,7 +97,6 @@ function Home(props) {
         <div className="home">
             <Slideshow rtsCodes={rtsCodes} serverip={serverip} />
             <div className="page-container">
-                <p>Select Theater</p>
                 <div className='theaterselect'>
                     <motion.button
                         whileHover={{ scale: 1.1 }}
@@ -104,6 +106,12 @@ function Home(props) {
                     >
                         <p>Capitol</p>
                     </motion.button>
+                    <motion.div
+                        className='selected-highlight'
+                        initial={{ x: -90 }}
+                        animate={{ x: theater === 'Capitol' ? -90 : 90 }}
+                        transition={{ duration: 0.5, type: 'spring' }}
+                    ></motion.div>
                     <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -121,6 +129,7 @@ function Home(props) {
                         setFormattedDate(handleDateFormating(date));
                     }}
                 />
+                {/* <NewDatePicker /> */}
                 <MovieCard serverip={serverip} date={formattedDate} shows={shows} />
             </div>
         </div>

@@ -46,7 +46,7 @@ function DropDown(props) {
                     targets: '.dropdown-list',
                     translateY: [320, -250],
                     easing: 'easeOutExpo',
-                    delay: 800,
+                    delay: 400,
                     duration: 800,
                     loop: false,
                 });
@@ -94,7 +94,7 @@ function DropDown(props) {
                 {pages.map((page, i) => {
                     return (
                         <Link to={`/${ext[i]}`}>
-                            <motion.button
+                            <button
                                 className='dropdown-item'
                                 key={`dropdown-item-${i}-key`}
                                 onClick={() => {
@@ -104,7 +104,7 @@ function DropDown(props) {
                                 }}
                             >
                                 <p>{page}</p>
-                            </motion.button>
+                            </button>
                         </Link>
                     );
                 })}

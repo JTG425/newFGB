@@ -45,12 +45,19 @@ function MovieCard(props) {
                             <p>{film.rating}</p>
                             {film.shows.filter(show => show.date === date).map((show, showIndex) => (
                                 <div className='showtime' key={showIndex}>
-                                    <motion.a
+                                    <a
                                         className='showtime-link'
                                         href={show.saleLink}
                                         target="_blank"
-                                    >{convertToStandardTime(show.time)}
-                                    </motion.a>
+                                    >
+                                        <motion.button
+                                            className='showtime-button'
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.9 }}
+                                        >
+                                            {convertToStandardTime(show.time)}
+                                        </motion.button>
+                                    </a>
                                 </div>
                             ))}
                         </div>

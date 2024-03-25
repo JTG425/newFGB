@@ -45,7 +45,7 @@ function NavBar(props) {
                 <motion.button
                     whileHover={{
                         scale: 1.1,
-                        backgroundColor: 'rgba(198, 4, 4, 0.5)',
+                        backgroundColor: 'rgba(148, 3, 3, 0.65)',
                         color: '#fff',
                         border: "none"
                     }}
@@ -60,7 +60,7 @@ function NavBar(props) {
                 <motion.button
                     whileHover={{
                         scale: 1.1,
-                        backgroundColor: 'rgba(198, 4, 4, 0.5)',
+                        backgroundColor: 'rgba(148, 3, 3, 0.65)',
                         color: '#fff',
                         border: "none"
                     }}
@@ -76,7 +76,7 @@ function NavBar(props) {
                 <motion.button
                     whileHover={{
                         scale: 1.1,
-                        backgroundColor: 'rgba(198, 4, 4, 0.5)',
+                        backgroundColor: 'rgba(148, 3, 3, 0.65)',
                         color: '#fff',
                         border: "none"
                     }}
@@ -91,7 +91,7 @@ function NavBar(props) {
                 <motion.button
                     whileHover={{
                         scale: 1.1,
-                        backgroundColor: 'rgba(198, 4, 4, 0.5)',
+                        backgroundColor: 'rgba(148, 3, 3, 0.65)',
                         color: '#fff',
                         border: "none"
                     }}

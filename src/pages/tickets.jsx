@@ -1,10 +1,15 @@
 import '../styles/tickets.css';
 import '../styles/home.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 
 function Tickets() {
+    const [confirmed, setConfirmed] = useState(false);
+
+    const handleCheckbox = (e) => {
+        setConfirmed(e.target.checked);
+    }
     return (
         <div className="page-container">
             <motion.div
@@ -59,23 +64,32 @@ function Tickets() {
                         </i>
                     </b>
                 </span></p>
-            </motion.div>
-            <motion.div className='terms'>
-                <motion.input type='checkbox' id='terms' name='terms' />
-                <label for='terms'>I have read and agree to the terms and conditions</label>
-            </motion.div>
-            <motion.div className='tickets-button'>
-                <motion.button
-                    whileTap={{ scale: 0.9 }}
-                >
+
+                <motion.div className='terms'>
+                    <motion.input type='checkbox' id='terms' name='terms' onChange={handleCheckbox} />
+                    <label for='terms'>I have read and agree to the terms and conditions</label>
+                </motion.div>
+                <motion.div className='tickets-button'>
+
                     <a
                         href='https://app.formovietickets.com/?id=fgbtheatres'
                         target='_blank'
                         rel='noreferrer'
+                        onClick={(e) => {
+                            if (confirmed === false) {
+                                e.preventDefault();
+                            }
+                        }}
                     >
-                        Buy Tickets
+                        <motion.button
+                            className='buy-button'
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            disabled={confirmed === false}
+                        >Buy Tickets</motion.button>
+
                     </a>
-                </motion.button>
+                </motion.div>
             </motion.div>
         </div>
     );

@@ -1,6 +1,6 @@
 import '../styles/locations.css';
 import '../styles/home.css';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import { FaPhoneAlt } from 'react-icons/fa';
@@ -56,7 +56,9 @@ function Locations() {
                     >
                         <h3>Capitol Theaters</h3>
                         <div className='map-container'>
-                            <CapitolMap />
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <CapitolMap />
+                            </Suspense>
                         </div>
                         <div className='map-cover'></div>
                         <motion.a
@@ -74,7 +76,9 @@ function Locations() {
                     >
                         <h3>Paramount Theaters</h3>
                         <div className='map-container'>
-                            <ParamountMap />
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <ParamountMap />
+                            </Suspense>
                         </div>
                         <div className='map-cover'></div>
                         <motion.a
