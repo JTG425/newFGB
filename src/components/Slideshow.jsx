@@ -30,7 +30,7 @@ const Slideshow = ({ rtsCodes, serverip }) => {
     useEffect(() => {
         const getBannerImages = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/get-banner-images`, {
+                const response = await fetch(`https://localhost:3001/get-banner-images`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ rtsCodes }) // Sending an array of RTS codes

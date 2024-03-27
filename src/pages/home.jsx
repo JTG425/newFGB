@@ -27,6 +27,7 @@ function Home(props) {
     const [startDate, setStartDate] = useState(new Date());
     const [formattedDate, setFormattedDate] = useState(handleDateFormating(startDate));
     const [theater, setTheater] = useState('Capitol');
+    const [recieved, setRecieved] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [expectedFilmTitleCount, setExpectedFilmTitleCount] = useState(0);
     const [rtsCodes, setRtsCodes] = useState([]);
@@ -73,7 +74,7 @@ function Home(props) {
 
                 // Update state with unique RTS codes
                 setRtsCodes([...new Set(allRtsCodes)]);
-
+                setRecieved(true);
                 setShows(extractedShows);
             } catch (error) {
                 console.error('Error importing XML:', error);

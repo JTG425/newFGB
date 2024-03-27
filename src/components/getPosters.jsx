@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, Suspense } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { set } from 'animejs';
 
 const variants = {
@@ -20,7 +20,9 @@ const MoviePoster = (props) => {
     const [poster, setPoster] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [recieved, setRecieved] = useState(false);
-    const rtsCode = props.rtsCode;
+    const [error, setError] = useState(false);
+    const film = props.film;
+    const rtsCode = film.rtsCode;
     const serverip = props.serverip;
 
     useEffect(() => {
@@ -37,10 +39,13 @@ const MoviePoster = (props) => {
                 const json = await response.json();
                 setPoster(json.base64Image);
                 setRecieved(true)
+                setError(false)
             } catch (error) {
+                setError(true);
                 console.error('Error importing Poster Images:', error);
             }
         };
+        setRecieved(false)
         getPoster();
     }, [rtsCode]);
 
@@ -53,13 +58,24 @@ const MoviePoster = (props) => {
                     className="poster"
                     src={`data:image/jpg;base64,${poster}`}
                     alt={rtsCode}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsOpen(!isOpen)}
                 />
             ) : (
-                <motion.div className="not-found">
-                    <p>No Poster Found</p>
-                </motion.div>
+                error ? (
+                    <motion.div className="not-found">
+                        <p>No Poster Found</p>
+                    </motion.div>
+                ) : (
+                    <motion.div className="not-found">
+                        <p>Loading</p>
+                    </motion.div>
+                )
             )}
         </div>
     );

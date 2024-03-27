@@ -68,5 +68,10 @@
     padding: 0.5rem;
     text-align: center;
     font-size: large;
+}
 
+@media (max-width: 768px) {
+    .datePicker {
+        margin-top: 1rem;
+    }
 }
