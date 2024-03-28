@@ -1,7 +1,7 @@
 import '../styles/home.css';
 import '../componentStyles/datepicker.css';
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Slideshow from '../components/Slideshow';
 import MovieCard from '../components/getMovies';
 import DatePicker from "react-datepicker";
@@ -27,6 +27,7 @@ function Home(props) {
     const [startDate, setStartDate] = useState(new Date());
     const [formattedDate, setFormattedDate] = useState(handleDateFormating(startDate));
     const [theater, setTheater] = useState('Capitol');
+    const [fade, setFade] = useState(false);
     const [recieved, setRecieved] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [expectedFilmTitleCount, setExpectedFilmTitleCount] = useState(0);
@@ -37,9 +38,21 @@ function Home(props) {
 
 
 
+    const fadeVariants = {
+        fadeIn: {
+            opacity: 0
+        },
+        fadeOut: {
+            opacity: 1
+        }
+    }
+
+
 
     useEffect(() => {
         const importXml = async () => {
+
+            // Import Capitol XML Into shows
             try {
                 const response = await fetch(`https://8qgqyq3ke0.execute-api.us-east-1.amazonaws.com/default/send-xml`, {
                     method: 'POST',
@@ -91,6 +104,7 @@ function Home(props) {
 
     const handleTheaterChange = (theater) => {
         setTheater(theater);
+        setFade(true);
         console.log(theater);
     }
 
@@ -99,6 +113,9 @@ function Home(props) {
         console.log(formattedDate);
         console.log(shows);
     }, [startDate]);
+
+
+
 
     return (
         <div className="home">
@@ -133,6 +150,7 @@ function Home(props) {
                     selected={startDate}
                     onChange={(date) => {
                         setStartDate(date);
+                        setFade(true);
                         setFormattedDate(handleDateFormating(date));
                     }}
                 />
