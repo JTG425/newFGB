@@ -41,7 +41,13 @@ function Home(props) {
     useEffect(() => {
         const importXml = async () => {
             try {
-                const response = await fetch(`https://8qgqyq3ke0.execute-api.us-east-1.amazonaws.com/default/send-xml`);
+                const response = await fetch(`https://8qgqyq3ke0.execute-api.us-east-1.amazonaws.com/default/send-xml`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ theater }),
+                });
                 const xmlText = await response.text();
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
@@ -81,7 +87,7 @@ function Home(props) {
             }
         };
         importXml();
-    }, [formattedDate]);
+    }, [theater]);
 
     const handleTheaterChange = (theater) => {
         setTheater(theater);

@@ -30,6 +30,7 @@ const Slideshow = ({ rtsCodes, serverip }) => {
     useEffect(() => {
         const getBannerImages = async () => {
             try {
+                // const response = await fetch(`https://v9m5j4di57.execute-api.us-east-1.amazonaws.com/default/send-banner-images`, {
                 const response = await fetch(`https://localhost:3001/get-banner-images`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -42,9 +43,9 @@ const Slideshow = ({ rtsCodes, serverip }) => {
             }
         };
 
-        if (rtsCodes.length > 0) {
-            getBannerImages();
-        }
+
+        getBannerImages();
+        console.log(images)
     }, [rtsCodes]); // Dependency on rtsCodes
 
     const [[imageIndex, direction], setImageIndex] = useState([0, 0]);
@@ -61,6 +62,8 @@ const Slideshow = ({ rtsCodes, serverip }) => {
 
         return () => clearInterval(interval);
     }, [imageIndex]);
+
+
 
     return (
         <div className="slideshow">
