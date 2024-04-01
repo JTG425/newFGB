@@ -7,9 +7,7 @@ import NavBar from './components/navbar';
 import Home from './pages/home';
 import Tickets from './pages/tickets';
 import Locations from './pages/locations';
-import Gift from './pages/gift';
-import Advertise from './pages/advertise';
-import Groups from './pages/groups';
+import About from './pages/about';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SocialIcon } from 'react-social-icons';
 
@@ -95,9 +93,7 @@ function App() {
                     <Route path="/home" element={<Home serverip={serverip} />} />
                     <Route path="/tickets" element={<Tickets />} />
                     <Route path="/locations" element={<Locations />} />
-                    <Route path="/gift" element={<Gift />} />
-                    <Route path="/advertise" element={<Advertise />} />
-                    <Route path="/groups" element={<Groups />} />
+                    <Route path="/about" element={<About />} />
                   </Routes>
                 </motion.div>
               </AnimatePresence>

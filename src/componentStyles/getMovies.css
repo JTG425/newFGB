@@ -71,6 +71,12 @@
     height: auto;
 }
 
+.poster-loading {
+    width: 200px;
+    height: 300px;
+    background-color: var(--foreground);
+}
+
 @media screen and (max-width: 600px) {
     .movieCard {
         width: 85vw;

@@ -52,7 +52,7 @@ const MoviePoster = (props) => {
 
 
     return (
-        <div>
+        <div className='poster'>
             {poster != null ? (
                 <motion.img
                     className="poster"
@@ -72,7 +72,7 @@ const MoviePoster = (props) => {
                         <p>No Poster Found</p>
                     </motion.div>
                 ) : (
-                    <motion.div className="not-found">
+                    <motion.div className="poster-loading">
                         <p>Loading</p>
                     </motion.div>
                 )

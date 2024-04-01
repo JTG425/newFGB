@@ -68,7 +68,7 @@ function DropDown(props) {
         "home",
         "tickets",
         "locations",
-        "gift"
+        "about"
     ]
 
 

@@ -87,7 +87,7 @@ function NavBar(props) {
                     <p>Locations</p>
                 </motion.button>
             </Link>
-            <Link to='/gift'>
+            <Link to='/about'>
                 <motion.button
                     whileHover={{
                         scale: 1.1,
