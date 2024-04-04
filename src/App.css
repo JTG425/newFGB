@@ -27,6 +27,7 @@
 
 body {
   overscroll-behavior: none;
+  overflow-x: hidden;
 }
 
 .App {
