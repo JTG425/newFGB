@@ -73,7 +73,7 @@ const MoviePoster = (props) => {
                     </motion.div>
                 ) : (
                     <motion.div className="poster-loading">
-                        <p>Loading</p>
+                        <p>Loading {rtsCode}</p>
                     </motion.div>
                 )
             )}

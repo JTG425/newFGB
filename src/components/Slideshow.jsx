@@ -28,25 +28,29 @@ const Slideshow = ({ rtsCodes, serverip }) => {
     const [images, setImages] = useState([]);
 
     useEffect(() => {
-        const getBannerImages = async () => {
+        const getPoster = async () => {
             try {
-                // const response = await fetch(`https://v9m5j4di57.execute-api.us-east-1.amazonaws.com/default/send-banner-images`, {
-                const response = await fetch(`https://localhost:3001/get-banner-images`, {
+                const response = await fetch(`https://v9m5j4di57.execute-api.us-east-1.amazonaws.com/default/send-banner-images`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ rtsCodes }) // Sending an array of RTS codes
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ rtsCodes }),
                 });
-                const data = await response.json();
-                setImages(data.base64Images); // Expecting an array of base64 images
+
+                const json = await response.json();
+                //Push all images into an array
+                let images = []
+                for (let i = 0; i < json.length; i++) {
+                    images.push(json[i].base64Image)
+                }
+                setImages(images)
             } catch (error) {
-                console.error('Error fetching banner images:', error);
+                console.error('Error importing Poster Images:', error);
             }
         };
-
-
-        getBannerImages();
-        console.log(images)
-    }, [rtsCodes]); // Dependency on rtsCodes
+        getPoster();
+    }, [rtsCodes]);
 
     const [[imageIndex, direction], setImageIndex] = useState([0, 0]);
     const activeImageIndex = wrap(0, images.length, imageIndex);
