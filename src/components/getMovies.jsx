@@ -1,5 +1,5 @@
 import '../componentStyles/getMovies.css';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import MoviePoster from './getPosters';
 import { useState, Suspense } from 'react';
 
@@ -40,6 +40,10 @@ function MovieCard(props) {
                     <motion.div
                         className='film'
                         key={filmIndex}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 1, repeat: 0 }}
+
                     >
                         <MoviePoster serverip={serverip} film={film} />
                         <div className='film-header'>

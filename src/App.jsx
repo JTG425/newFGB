@@ -43,6 +43,15 @@ function App() {
     }, 600);
   }
 
+  const handleLoadEnd = (loadScreen) => {
+    setTimeout(() => {
+      setLoadScreen(false);
+      setTimeout(() => {
+        fadeRef.current.style.display = 'none';
+      }, 1000);
+    }, 2000);
+  }
+
   const pageVariants = {
     fadeIn: {
       opacity: 1,
@@ -53,14 +62,6 @@ function App() {
     fadeOut: { opacity: 0 },
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoadScreen(false);
-      setTimeout(() => {
-        fadeRef.current.style.display = 'none';
-      }, 1000);
-    }, 2000);
-  }, []);
 
   return (
     <body>
@@ -89,7 +90,7 @@ function App() {
                   exit={{ opacity: 0 }}
                 >
                   <Routes>
-                    <Route path="/" element={<Home serverip={serverip} />} />
+                    <Route path="/" element={<Home serverip={serverip} loadScreen={loadScreen} setLoadScreen={handleLoadEnd} />} />
                     <Route path="/home" element={<Home serverip={serverip} />} />
                     <Route path="/tickets" element={<Tickets />} />
                     <Route path="/locations" element={<Locations />} />

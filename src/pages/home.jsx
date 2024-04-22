@@ -34,6 +34,8 @@ function Home(props) {
     const [rtsCodes, setRtsCodes] = useState([]);
     const [shows, setShows] = useState([]);
     const serverip = props.serverip;
+    const loadScreen = props.loadScreen;
+    const setLoadScreen = props.setLoadScreen;
 
 
 
@@ -100,8 +102,12 @@ function Home(props) {
             }
         };
         importXml();
+        handlePageLoad(false);
     }, [theater]);
 
+    const handlePageLoad = (load) => {
+        setLoadScreen(false);
+    }
     const handleTheaterChange = (theater) => {
         setTheater(theater);
         setFade(true);

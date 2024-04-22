@@ -26,31 +26,42 @@ const swipePower = (offset, velocity) => Math.abs(offset) * velocity;
 
 const Slideshow = ({ rtsCodes, serverip }) => {
     const [images, setImages] = useState([]);
+    const tempImages = [
+        "https://i.imgur.com/MFS98kO.jpg",
+        "https://i.imgur.com/Z2iLEbb.jpg",
+        "https://i.imgur.com/yVZ51br.jpg",
+        "https://i.imgur.com/ZJy8iEn.jpg",
+        "https://i.imgur.com/d754pyD.jpg",
+        "https://i.imgur.com/1yDcN6a.jpg",
+        "https://i.imgur.com/niXe4Tx.jpg",
+        "https://i.imgur.com/34yAiG4.jpg",
+        "https://i.imgur.com/Fc1vo1T.jpg"
+    ]
 
-    useEffect(() => {
-        const getPoster = async () => {
-            try {
-                const response = await fetch(`https://v9m5j4di57.execute-api.us-east-1.amazonaws.com/default/send-banner-images`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ rtsCodes }),
-                });
+    // useEffect(() => {
+    //     const getPoster = async () => {
+    //         try {
+    //             const response = await fetch(`https://v9m5j4di57.execute-api.us-east-1.amazonaws.com/default/send-banner-images`, {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify({ rtsCodes }),
+    //             });
 
-                const json = await response.json();
-                //Push all images into an array
-                let images = []
-                for (let i = 0; i < json.length; i++) {
-                    images.push(json[i].base64Image)
-                }
-                setImages(images)
-            } catch (error) {
-                console.error('Error importing Poster Images:', error);
-            }
-        };
-        getPoster();
-    }, [rtsCodes]);
+    //             const json = await response.json();
+    //             //Push all images into an array
+    //             let images = []
+    //             for (let i = 0; i < json.length; i++) {
+    //                 images.push(json[i].base64Image)
+    //             }
+    //             setImages(images)
+    //         } catch (error) {
+    //             console.error('Error importing Poster Images:', error);
+    //         }
+    //     };
+    //     getPoster();
+    // }, [rtsCodes]);
 
     const [[imageIndex, direction], setImageIndex] = useState([0, 0]);
     const activeImageIndex = wrap(0, images.length, imageIndex);
@@ -58,6 +69,10 @@ const Slideshow = ({ rtsCodes, serverip }) => {
     const swipeToImage = (swipeDirection) => {
         setImageIndex([imageIndex + swipeDirection, swipeDirection]);
     };
+
+    useEffect(() => {
+        setImages(tempImages)
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -77,7 +92,7 @@ const Slideshow = ({ rtsCodes, serverip }) => {
                         <motion.img
                             key={`${imageIndex}-background`}
                             className="background-image"
-                            src={`data:image/jpg;base64,${images[activeImageIndex]}`}
+                            src={`${images[activeImageIndex]}`}
                             custom={direction}
                             variants={sliderVariants}
                             initial="enter"
@@ -103,7 +118,7 @@ const Slideshow = ({ rtsCodes, serverip }) => {
                         <motion.img
                             key={imageIndex}
                             className="foreground-image"
-                            src={`data:image/jpg;base64,${images[activeImageIndex]}`}
+                            src={`${images[activeImageIndex]}`}
                             custom={direction}
                             variants={sliderVariants}
                             initial="enter"
